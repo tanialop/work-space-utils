@@ -1,7 +1,6 @@
 #!/bin/bash
 
-
-source $VH_CURRENT_SCRIPT_PATH/export-viewer-certificate.sh
+source "$VH_CURRENT_SCRIPT_PATH/export-viewer-certificate.sh"
 
 PORT=9022
 echo "########### Start up certificate-service in the port $PORT ###########"
