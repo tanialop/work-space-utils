@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source $VH_CURRENT_SCRIPT_PATH/export-mysql-credential.sh
+source "$VH_CURRENT_SCRIPT_PATH/export-mysql-credential.sh"
 
 DATABASE_NAME="bootstrap_db"
 

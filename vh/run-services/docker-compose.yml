@@ -1,0 +1,84 @@
+version: "3"
+services:
+  mysql:
+    image: ${MYSQL_IMAGE}
+    ports:
+      - 3306:3306
+    volumes:
+      - .volumes/mysql/data:/var/lib/mysql
+      - .volumes/mysql/tmp:/tmp/mysql
+      #- .volumes/mysqld:/var/run/mysqld
+    environment:
+      - MYSQL_DATABASE
+      - MYSQL_ROOT_PASSWORD
+  els:
+    image: ${ELS_IMAGE}
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - .volumes/els/data:/usr/share/elasticsearch/data
+      #environment:
+      #- es.logger.level=DEBUG
+  # Adding Kibana and Sense to help with ELS Queries from the browser. Another option is https://github.com/ElasticHQ/elasticsearch-HQ
+  kibana:
+    image: ${KIBANA_IMAGE}
+    ports:
+      - 5601:5601
+    environment:
+      - ELASTICSEARCH_URL=http://els:9200
+  zookeeper:
+    image: ${ZOOKEEPER_IMAGE}
+    ports:
+      - 2181:2181
+  kafka:
+    image: ${KAFKA_IMAGE}
+    ports:
+      - 9092:9092
+    environment:
+      - KAFKA_ADVERTISED_HOST_NAME=${KAFKA_ADVERTISED_HOST}
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+  keycloak:
+    image: ${KEYCLOAK_IMAGE}
+    ports:
+      - 8080:8080
+    environment:
+      KEYCLOAK_USER: ${KEYCLOAK_USER}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      DB_VENDOR: MYSQL
+      DB_ADDR: mysql
+      DB_DATABASE: ${KEYCLOAK_DB}
+      DB_USER: root
+      DB_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      KAFKA_ADVERTISED_PORT: ${KAFKA_ADVERTISED_PORT}
+      REGISTRATION_TOPIC_NAME: ${KAFKA_REGISTRATION_TOPIC}
+      KAFKA_ADVERTISED_HOST: ${KAFKA_ADVERTISED_HOST}
+    command:
+      # Command to import a realm configuration file.
+      #- "-Dkeycloak.migration.action=import -Dkeycloak.migration.provider=dir -Dkeycloak.migration.dir=/opt/jboss/keycloak/import-dir -Dkeycloak.migration.strategy=OVERWRITE_EXISTING"
+      # Enable runtime scripts
+      -Dkeycloak.profile.feature.upload_scripts=enabled
+      -Dkeycloak.profile.feature.admin_fine_grained_authz=enabled
+      -Dkeycloak.profile.feature.token_exchange=enabled
+    volumes:
+      # Realms configurations folder
+      - ./keycloak/import-dir:/opt/jboss/keycloak/import-dir
+      # Custom spi folder
+      #- ./keycloak/veea-spi:/opt/jboss/keycloak/standalone/deployments/
+      ## WJD - ./keycloak/standalone.xml:/opt/jboss/keycloak/standalone/configuration/standalone.xml
+      #- ./keycloak/mappers/veea-token-mappers.jar:/opt/jboss/keycloak/standalone/deployments/veea-token-mappers.jar
+      #- ./keycloak/veea-spi/ear-1.2.0.ear:/opt/jboss/keycloak/standalone/deployments/ear-1.2.0.ear
+      ## WJD - ./keycloak/veea-spi/veea-spi-resource-1.2.0.jar:/opt/jboss/keycloak/standalone/deployments/veea-spi-resource-1.2.0.jar
+      #- ./keycloak/mappers/veea-token-mappers.jar.dodeploy:/opt/jboss/keycloak/standalone/deployments/veea-token-mappers.jar.dodeploy
+      #- ./keycloak/mappers/veea-group-mapping.jar:/opt/jboss/keycloak/standalone/deployments/veea-group-mapping.jar
+      #- ./keycloak/mappers/changeProvider.xsl:/opt/jboss/keycloak/changeProvider.xsl
+      #- ./keycloak/mappers
+      #- ./keycloak/veea-spi/sample-event-listener.jar:/opt/jboss/keycloak/standalone/deployments/sample-event-listener.jar
+      # Custom theme folder
+      #- ./keycloak/veea-theme/vh:/opt/jboss/keycloak/themes/vh
+      # Custom keycloak server configuration folder
+      ## WJD - ./keycloak/configuration/standalone-ha.xml:/opt/jboss/keycloak/standalone/configuration/standalone-ha.xml
+    depends_on:
+      - mysql

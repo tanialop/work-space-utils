@@ -1,12 +1,12 @@
 #!/bin/bash
-# i-user.sh <environment> <user_name> <user_password> <impersonated_user_name> <realm>
-# i-user.sh qa support@veea.com 'support123!' 'automated-test-qa@veeasystems.com'
-# i-user.sh qa support@veea.com 'support123!' 'automated-test-qa@veeasystems.com' veea
+# i-user.sh <user_name> <user_password> <impersonated_user_name> <environment> <realm>
+# i-user.sh support@veea.com 'support123!' 'automated-test-qa@veeasystems.com'
+# i-user.sh support@veea.com 'support123!' 'automated-test-qa@veeasystems.com' qa veea
 
-ENV=$1
-SUPPORT_USER_NAME=$2
-SUPPORT_PASSWORD=$3
-IMPERSONATED_USER_NAME=$4
+SUPPORT_USER_NAME=$1
+SUPPORT_PASSWORD=$2
+IMPERSONATED_USER_NAME=$3
+ENV=$4
 REALM=$5
 
 source "$VH_CURRENT_SCRIPT_PATH/user-functions.sh" "$ENV" "$REALM"

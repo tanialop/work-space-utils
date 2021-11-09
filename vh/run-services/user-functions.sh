@@ -4,7 +4,7 @@
 # Example:
 # user-functions.sh local veea
 
-source "$VH_CURRENT_SCRIPT_PATH/export-keycloak-host.sh" "$ENV" "$REALM"
+source "$VH_CURRENT_SCRIPT_PATH/export-environment.sh" "$ENV" "$REALM"
 
 # Example: how to call this function
 # get_user_token_by_credential support@veea.com 'support123!'
