@@ -1,0 +1,12 @@
+[
+    {
+        "url": "http://repository1/releases/",
+        "token": "here-some-token-to-connect-into-repository"
+    },{
+        "url": "http://repository2/releases/",
+        "token": "here-some-token-to-connect-into-repository"
+    },{
+        "url": "http://repository3/releases/",
+        "token": "here-some-token-to-connect-into-repository"
+    },
+]

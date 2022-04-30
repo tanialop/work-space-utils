@@ -1,0 +1,17 @@
+/home/ronald/personal/another-projects/release-tracking/bin/Debug/net6.0/release-tracking
+/home/ronald/personal/another-projects/release-tracking/bin/Debug/net6.0/release-tracking.deps.json
+/home/ronald/personal/another-projects/release-tracking/bin/Debug/net6.0/release-tracking.runtimeconfig.json
+/home/ronald/personal/another-projects/release-tracking/bin/Debug/net6.0/release-tracking.dll
+/home/ronald/personal/another-projects/release-tracking/bin/Debug/net6.0/release-tracking.pdb
+/home/ronald/personal/another-projects/release-tracking/obj/Debug/net6.0/release-tracking.csproj.AssemblyReference.cache
+/home/ronald/personal/another-projects/release-tracking/obj/Debug/net6.0/release-tracking.GeneratedMSBuildEditorConfig.editorconfig
+/home/ronald/personal/another-projects/release-tracking/obj/Debug/net6.0/release-tracking.AssemblyInfoInputs.cache
+/home/ronald/personal/another-projects/release-tracking/obj/Debug/net6.0/release-tracking.AssemblyInfo.cs
+/home/ronald/personal/another-projects/release-tracking/obj/Debug/net6.0/release-tracking.csproj.CoreCompileInputs.cache
+/home/ronald/personal/another-projects/release-tracking/obj/Debug/net6.0/release-tracking.dll
+/home/ronald/personal/another-projects/release-tracking/obj/Debug/net6.0/refint/release-tracking.dll
+/home/ronald/personal/another-projects/release-tracking/obj/Debug/net6.0/release-tracking.pdb
+/home/ronald/personal/another-projects/release-tracking/obj/Debug/net6.0/release-tracking.genruntimeconfig.cache
+/home/ronald/personal/another-projects/release-tracking/obj/Debug/net6.0/ref/release-tracking.dll
+/home/ronald/personal/another-projects/release-tracking/bin/Debug/net6.0/Newtonsoft.Json.dll
+/home/ronald/personal/another-projects/release-tracking/obj/Debug/net6.0/release-tracking.csproj.CopyComplete
