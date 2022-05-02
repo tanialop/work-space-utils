@@ -53,7 +53,7 @@
       <param name="on_for" value="-" />
     </flipstrategy>
     <documentation>
-      <release>22.1</release>
+      <release>22.2</release>
       <owner>Owner 5</owner>
       <dependencies />
       <comments />
