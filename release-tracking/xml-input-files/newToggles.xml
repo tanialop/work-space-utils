@@ -11,14 +11,14 @@
             <comments>No comments</comments>
         </documentation>
     </feature>
-    <feature description="Display coaching data and associated worflow information" enable="true" uid="2">
+    <feature description="Display coaching data and associated worflow information Updated." enable="true" uid="2">
         <flipstrategy class="com.nice.saas.wfo.shared.featureToggle.TenantBasedFlippingStrategy">
             <param name="off_for" value="*" />
             <param name="on_for" value="-" />
         </flipstrategy>
         <documentation>
             <release>22.1</release>
-            <owner>Owner 2</owner>
+            <owner>Owner 2 Updated.</owner>
             <dependencies>NA</dependencies>
             <comments />
         </documentation>
@@ -30,7 +30,7 @@
         </flipstrategy>
         <documentation>
             <release>22.2</release>
-            <owner>Owner 3 Updated.</owner>
+            <owner>Owner 3</owner>
             <dependencies>NA</dependencies>
             <comments>NA</comments>
         </documentation>
@@ -47,7 +47,7 @@
             <comments />
         </documentation>
     </feature>
-    <feature description="Used for Separate RTIG billing feature" enable="true" uid="5">
+    <feature description="Used for Separate RTIG billing feature Updated." enable="true" uid="5">
     <flipstrategy class="com.nice.saas.wfo.shared.featureToggle.TenantBasedFlippingStrategy">
       <param name="off_for" value="*" />
       <param name="on_for" value="-" />
@@ -59,7 +59,7 @@
       <comments />
     </documentation>
   </feature>
-  	<feature description="Adding server side search support Updated." enable="true" uid="6">
+  	<feature description="Adding server side search support" enable="true" uid="6">
         <flipstrategy class="com.nice.saas.wfo.shared.featureToggle.TenantBasedFlippingStrategy">
             <param name="off_for" value="*" />
             <param name="on_for" value="-" />
