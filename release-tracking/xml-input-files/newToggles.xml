@@ -23,14 +23,14 @@
             <comments />
         </documentation>
     </feature>
-	<feature description="Adding server side search support test" enable="true" uid="3">
+	<feature description="Adding server side search support test Updated." enable="true" uid="3">
         <flipstrategy class="com.nice.saas.wfo.shared.featureToggle.TenantBasedFlippingStrategy">
             <param name="off_for" value="*" />
             <param name="on_for" value="-" />
         </flipstrategy>
         <documentation>
             <release>22.2</release>
-            <owner>Owner 3</owner>
+            <owner>Owner 3 Updated.</owner>
             <dependencies>NA</dependencies>
             <comments>NA</comments>
         </documentation>
@@ -59,7 +59,7 @@
       <comments />
     </documentation>
   </feature>
-  	<feature description="Adding server side search support" enable="true" uid="6">
+  	<feature description="Adding server side search support Updated." enable="true" uid="6">
         <flipstrategy class="com.nice.saas.wfo.shared.featureToggle.TenantBasedFlippingStrategy">
             <param name="off_for" value="*" />
             <param name="on_for" value="-" />
