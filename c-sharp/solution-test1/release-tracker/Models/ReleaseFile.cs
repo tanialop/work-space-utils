@@ -36,7 +36,7 @@ namespace release_tracker.Models
             {
                 Feature feature = new Feature();
                 feature.Description = (string)item["@description"];
-                feature.Id = (int)item["@uid"];
+                feature.Id = (string)item["@uid"];
                 feature.StrategyOffFor = GetStrategyOffFor((JObject)item["flipstrategy"]);
                 feature.StrategyOnFor = GetStrategyOnFor((JObject)item["flipstrategy"]);
                 feature.ReleaseVersion = (string)item["documentation"]["release"];
@@ -70,6 +70,10 @@ namespace release_tracker.Models
         public List<String> getDistinctFeatureVersions()
         {
             return GetAllFeatureVersions().Distinct().ToList();
+        }
+
+        public List<Feature> GetFeatureByVersion(string version) { 
+            return GetFeatures().FindAll(feature => feature.ReleaseVersion == version).ToList();
         }
     }
 }

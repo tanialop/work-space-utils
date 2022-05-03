@@ -28,7 +28,7 @@ namespace release_tracker.ExternalFeatureData
             this.releaseRepositories = releaseRepository;
         }
 
-        public List<ReleaseFile> getFileRelease() {
+        public List<ReleaseFile> getReleaseFile() {
             return DownloadFilesFromRepositories();
         }
 

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "release-tracker": {
+      "commandName": "Project",
+      "jsWebView2Debugging": false,
+      "sqlDebugging": false,
+      "nativeDebugging": false
+    }
+  }
+}
