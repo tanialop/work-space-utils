@@ -21,9 +21,11 @@ namespace release_tracker.BusinessLogic
             this.releaseLocalDataAccess = releaseLocalDataAccess;
         }
 
-        public List<ReportRelease> CompareReleaseBetweenAllRepositories(string version)
+        public List<ReportCompareRepositories> CompareReleaseBetweenAllRepositories(string version)
         {
-            List<ReleaseFile> releaseFiles = DownloadReleaseFileBeforeRelease();
+            List<ReportCompareRepositories> reportCompareRepositories = new List<ReportCompareRepositories>();
+
+            DownloadReleaseFileBeforeRelease();
 
             Repository[] repositories = configuration.GetSection("repositories").Get<Repository[]>();
             Repository[] targetRepositories = configuration.GetSection("repositories").Get<Repository[]>();
@@ -33,26 +35,30 @@ namespace release_tracker.BusinessLogic
 
                 foreach (Repository targetRepository in targetRepositories)
                 {
-                    if(repository.name.Equals(version, StringComparison.OrdinalIgnoreCase))
+                    if(!repository.name.Equals(version, StringComparison.OrdinalIgnoreCase))
                     {
-                        continue;
-                    }
+                        ReleaseFile releaseFile2 = releaseLocalDataAccess.GetReleaseFileBeforeRelease(targetRepository.name);
+                        List<ReportFeatureDistinctStore> reportReleaseDistinctStores = CompareReleaseFilesDistinctRepositories(
+                            releaseFile1, releaseFile2, version, repository, targetRepository);
 
-                    ReleaseFile releaseFile2 = releaseLocalDataAccess.GetReleaseFileBeforeRelease(targetRepository.name);
-                    List<ReportReleaseDistinctStore> reportReleaseDistinctStores = CompareReleaseFilesDistinctRepositories(
-                        releaseFile1, releaseFile2, version, repository, targetRepository);
-                    Console.WriteLine("========================================");
-                    Console.WriteLine(GetReportAsJson(reportReleaseDistinctStores));
+                        ReportCompareRepositories report = new ReportCompareRepositories();
+                        report.RepositoryName1 = repository.name;
+                        report.RepositoryName2 = targetRepository.name;
+                        report.FeatureUpdated = reportReleaseDistinctStores;
+
+                        reportCompareRepositories.Add(report);
+
+                    }                    
                 }
             }
 
-            return null;
+            return reportCompareRepositories;
         }
 
-        public string GetReportAsJson(List<ReportReleaseDistinctStore> reportReleaseDistinctStores)
+        public string GetReportAsJson(List<ReportCompareRepositories> reportCompareRepositories)
         {
             var opt = new JsonSerializerOptions() { WriteIndented = true };
-            string strJson = JsonSerializer.Serialize(reportReleaseDistinctStores, opt);
+            string strJson = JsonSerializer.Serialize(reportCompareRepositories, opt);
 
             return strJson;
         }
@@ -139,10 +145,10 @@ namespace release_tracker.BusinessLogic
             return report;
         }
 
-        public List<ReportReleaseDistinctStore> CompareReleaseFilesDistinctRepositories(
+        public List<ReportFeatureDistinctStore> CompareReleaseFilesDistinctRepositories(
             ReleaseFile releaseFile1, ReleaseFile releaseFile2, string version, Repository repository1, Repository repository2)
         {
-            var reports = new List<ReportReleaseDistinctStore>();            
+            var reports = new List<ReportFeatureDistinctStore>();            
 
             List<Feature> featuresRepository1 = releaseFile1.GetFeatureByVersion(version);
             List<Feature> featuresRepository2 = releaseFile2.GetFeatureByVersion(version);
@@ -155,9 +161,7 @@ namespace release_tracker.BusinessLogic
                 {
                     if (!featureRep2.Equals(featureRep1))
                     {
-                        var diff = new ReportReleaseDistinctStore();
-                        diff.RepositoryName1 = repository1.name;
-                        diff.RepositoryName2 = repository2.name;
+                        var diff = new ReportFeatureDistinctStore();
                         diff.FeatureId = featureRep1.Id;
                         diff.Version = version;
                         diff.Owner = new DiffDistinctStore(featureRep1.Owner, featureRep2.Owner);

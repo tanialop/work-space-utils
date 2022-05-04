@@ -7,14 +7,8 @@ using System.Threading.Tasks;
 
 namespace release_tracker.Models
 {
-    public class ReportReleaseDistinctStore
+    public class ReportFeatureDistinctStore
     {
-        [JsonPropertyName("repository1")]
-        public string RepositoryName1 { get; set; }
-
-        [JsonPropertyName("repository2")]
-        public string RepositoryName2 { get; set; }
-
         [JsonPropertyName("featureId")]
         public string FeatureId { get; set; }
 

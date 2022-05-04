@@ -6,6 +6,7 @@ using release_tracker.BusinessLogic;
 using release_tracker.ExternalFeatureData;
 using release_tracker.LocalDataAccess;
 using release_tracker.Models;
+using System.Text.Json;
 using System.Xml;
 
 //Console.WriteLine("Hello, World!");
@@ -18,16 +19,11 @@ releaseFileFacade.DownloadReleaseFileAfterRelease();
 
 List<ReportRelease> reportReleases = releaseFileFacade.CompareReleaseFilesOnAllRepositories("22.1", "22.2");
 
-ReportRelease.PrintOnConsole(reportReleases);
+//ReportRelease.PrintOnConsole(reportReleases);
 
-reportReleases = releaseFileFacade.CompareReleaseBetweenAllRepositories("22.2");
-
-
-
-
-
-
-
+List<ReportCompareRepositories> reportCompareRepositories = releaseFileFacade.CompareReleaseBetweenAllRepositories("22.2");
+Console.WriteLine("##############################################");
+Console.WriteLine(releaseFileFacade.GetReportAsJson(reportCompareRepositories));
 
 
 

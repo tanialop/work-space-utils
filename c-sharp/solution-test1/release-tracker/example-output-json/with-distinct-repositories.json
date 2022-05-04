@@ -1,0 +1,422 @@
+﻿[
+  {
+    "repository1": "Stage",
+    "repository2": "Japan",
+    "featureUpdated": [
+      {
+        "featureId": "1",
+        "description": {
+          "valueInRepository1": "intraday support manual outbound",
+          "valueInRepository2": "intraday support manual outbound",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 1 Updated1",
+          "valueInRepository2": "Owner 11",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "perm_SO32Load_100001",
+          "valueInRepository2": "perm_SO32Load_100001",
+          "updated": false
+        }
+      },
+      {
+        "featureId": "4",
+        "description": {
+          "valueInRepository1": "support schedule optimization",
+          "valueInRepository2": "support schedule optimization",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 4",
+          "valueInRepository2": "Owner 44",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "-",
+          "valueInRepository2": "-",
+          "updated": false
+        }
+      },
+      {
+        "featureId": "6",
+        "description": {
+          "valueInRepository1": "Adding server side search support",
+          "valueInRepository2": "Adding server side search support",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 6 Updated3",
+          "valueInRepository2": "Owner 6",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "-",
+          "valueInRepository2": "-",
+          "updated": false
+        }
+      }
+    ]
+  },
+  {
+    "repository1": "Stage",
+    "repository2": "Production",
+    "featureUpdated": [
+      {
+        "featureId": "1",
+        "description": {
+          "valueInRepository1": "intraday support manual outbound",
+          "valueInRepository2": "intraday support manual outbound",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 1 Updated1",
+          "valueInRepository2": "Owner 1",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "perm_SO32Load_100001",
+          "valueInRepository2": "perm_SO32Load_100001",
+          "updated": false
+        }
+      },
+      {
+        "featureId": "6",
+        "description": {
+          "valueInRepository1": "Adding server side search support",
+          "valueInRepository2": "Adding server side search support",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 6 Updated3",
+          "valueInRepository2": "Owner 6",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "-",
+          "valueInRepository2": "-",
+          "updated": false
+        }
+      }
+    ]
+  },
+  {
+    "repository1": "Japan",
+    "repository2": "Stage",
+    "featureUpdated": [
+      {
+        "featureId": "1",
+        "description": {
+          "valueInRepository1": "intraday support manual outbound",
+          "valueInRepository2": "intraday support manual outbound",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 11",
+          "valueInRepository2": "Owner 1 Updated1",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "perm_SO32Load_100001",
+          "valueInRepository2": "perm_SO32Load_100001",
+          "updated": false
+        }
+      },
+      {
+        "featureId": "4",
+        "description": {
+          "valueInRepository1": "support schedule optimization",
+          "valueInRepository2": "support schedule optimization",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 44",
+          "valueInRepository2": "Owner 4",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "-",
+          "valueInRepository2": "-",
+          "updated": false
+        }
+      },
+      {
+        "featureId": "6",
+        "description": {
+          "valueInRepository1": "Adding server side search support",
+          "valueInRepository2": "Adding server side search support",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 6",
+          "valueInRepository2": "Owner 6 Updated3",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "-",
+          "valueInRepository2": "-",
+          "updated": false
+        }
+      }
+    ]
+  },
+  {
+    "repository1": "Japan",
+    "repository2": "Production",
+    "featureUpdated": [
+      {
+        "featureId": "1",
+        "description": {
+          "valueInRepository1": "intraday support manual outbound",
+          "valueInRepository2": "intraday support manual outbound",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 11",
+          "valueInRepository2": "Owner 1",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "perm_SO32Load_100001",
+          "valueInRepository2": "perm_SO32Load_100001",
+          "updated": false
+        }
+      },
+      {
+        "featureId": "3",
+        "description": {
+          "valueInRepository1": "Adding server side search support test",
+          "valueInRepository2": "Adding server side search support test",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 33",
+          "valueInRepository2": "Owner 3",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "-",
+          "valueInRepository2": "-",
+          "updated": false
+        }
+      },
+      {
+        "featureId": "4",
+        "description": {
+          "valueInRepository1": "support schedule optimization",
+          "valueInRepository2": "support schedule optimization",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 44",
+          "valueInRepository2": "Owner 4",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "-",
+          "valueInRepository2": "-",
+          "updated": false
+        }
+      }
+    ]
+  },
+  {
+    "repository1": "Production",
+    "repository2": "Stage",
+    "featureUpdated": [
+      {
+        "featureId": "1",
+        "description": {
+          "valueInRepository1": "intraday support manual outbound",
+          "valueInRepository2": "intraday support manual outbound",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 1",
+          "valueInRepository2": "Owner 1 Updated1",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "perm_SO32Load_100001",
+          "valueInRepository2": "perm_SO32Load_100001",
+          "updated": false
+        }
+      },
+      {
+        "featureId": "6",
+        "description": {
+          "valueInRepository1": "Adding server side search support",
+          "valueInRepository2": "Adding server side search support",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 6",
+          "valueInRepository2": "Owner 6 Updated3",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "-",
+          "valueInRepository2": "-",
+          "updated": false
+        }
+      }
+    ]
+  },
+  {
+    "repository1": "Production",
+    "repository2": "Japan",
+    "featureUpdated": [
+      {
+        "featureId": "1",
+        "description": {
+          "valueInRepository1": "intraday support manual outbound",
+          "valueInRepository2": "intraday support manual outbound",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 1",
+          "valueInRepository2": "Owner 11",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "perm_SO32Load_100001",
+          "valueInRepository2": "perm_SO32Load_100001",
+          "updated": false
+        }
+      },
+      {
+        "featureId": "3",
+        "description": {
+          "valueInRepository1": "Adding server side search support test",
+          "valueInRepository2": "Adding server side search support test",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 3",
+          "valueInRepository2": "Owner 33",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "-",
+          "valueInRepository2": "-",
+          "updated": false
+        }
+      },
+      {
+        "featureId": "4",
+        "description": {
+          "valueInRepository1": "support schedule optimization",
+          "valueInRepository2": "support schedule optimization",
+          "updated": false
+        },
+        "version": "22.2",
+        "owner": {
+          "valueInRepository1": "Owner 4",
+          "valueInRepository2": "Owner 44",
+          "updated": true
+        },
+        "offFor": {
+          "valueInRepository1": "*",
+          "valueInRepository2": "*",
+          "updated": false
+        },
+        "onFor": {
+          "valueInRepository1": "-",
+          "valueInRepository2": "-",
+          "updated": false
+        }
+      }
+    ]
+  }
+]

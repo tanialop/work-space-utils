@@ -13,6 +13,7 @@ namespace release_tracker.Models
         {
             ValueRepository1 = value1;
             ValueRepository2 = value2;
+            Updated = !value1.Equals(value2);
         }
 
         [JsonPropertyName("valueInRepository1")]
@@ -20,5 +21,8 @@ namespace release_tracker.Models
 
         [JsonPropertyName("valueInRepository2")]
         public string ValueRepository2 { get; set; }
+
+        [JsonPropertyName("updated")]
+        public bool Updated { get; set; }
     }
 }
