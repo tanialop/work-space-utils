@@ -20,7 +20,7 @@ List<ReportRelease> reportReleases = releaseFileFacade.CompareReleaseFilesOnAllR
 
 ReportRelease.PrintOnConsole(reportReleases);
 
-reportReleases = releaseFileFacade.CompareReleaseFilesOnAllRepositories("22.2");
+reportReleases = releaseFileFacade.CompareReleaseBetweenAllRepositories("22.2");
 
 
 

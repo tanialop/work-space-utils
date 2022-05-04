@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "m6i55rjdd0gQXQAIAgeyEyJ/zoaJp/N4irBHDTnhSnhloV4zdmdBjBkPMC9Xovn/eKUbKrvR93IvPzkQIQM1yQ==",
+  "dgSpecHash": "Satc4DzBWBPJVBnIekBs6AlRKN9Q0PuOAFxyo7utsfEoujUJoBFX0ePQHkLjOR7tGnlaYAMGgj4LRiZGrj/tqA==",
   "success": true,
-  "projectFilePath": "E:\\ronald\\c-sharp\\solution-test1\\release-tracker\\release-tracker.csproj",
+  "projectFilePath": "E:\\ronald\\personal\\work-space-utils\\c-sharp\\solution-test1\\release-tracker\\release-tracker.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\microsoft.extensions.configuration\\6.0.0\\microsoft.extensions.configuration.6.0.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\6.0.0\\microsoft.extensions.configuration.abstractions.6.0.0.nupkg.sha512",

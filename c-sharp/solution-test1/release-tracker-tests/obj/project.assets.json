@@ -2633,11 +2633,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\ronald\\c-sharp\\solution-test1\\release-tracker-tests\\release-tracker-tests.csproj",
+      "projectUniqueName": "E:\\ronald\\personal\\work-space-utils\\c-sharp\\solution-test1\\release-tracker-tests\\release-tracker-tests.csproj",
       "projectName": "release-tracker-tests",
-      "projectPath": "E:\\ronald\\c-sharp\\solution-test1\\release-tracker-tests\\release-tracker-tests.csproj",
+      "projectPath": "E:\\ronald\\personal\\work-space-utils\\c-sharp\\solution-test1\\release-tracker-tests\\release-tracker-tests.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "E:\\ronald\\c-sharp\\solution-test1\\release-tracker-tests\\obj\\",
+      "outputPath": "E:\\ronald\\personal\\work-space-utils\\c-sharp\\solution-test1\\release-tracker-tests\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -2654,8 +2654,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "E:\\ronald\\c-sharp\\solution-test1\\release-tracker\\release-tracker.csproj": {
-              "projectPath": "E:\\ronald\\c-sharp\\solution-test1\\release-tracker\\release-tracker.csproj"
+            "E:\\ronald\\personal\\work-space-utils\\c-sharp\\solution-test1\\release-tracker\\release-tracker.csproj": {
+              "projectPath": "E:\\ronald\\personal\\work-space-utils\\c-sharp\\solution-test1\\release-tracker\\release-tracker.csproj"
             }
           }
         }

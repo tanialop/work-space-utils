@@ -1,0 +1,74 @@
+<features>
+	<feature description="intraday support manual outbound" enable="true" uid="1">
+        <flipstrategy class="com.nice.saas.wfo.shared.featureToggle.TenantBasedFlippingStrategy">
+            <param name="off_for" value="*" />
+            <param name="on_for" value="perm_SO32Load_100001" />
+        </flipstrategy>
+        <documentation>
+            <release>22.2</release>
+            <owner>Owner 11</owner>
+            <dependencies>No dependencies</dependencies>
+            <comments>No comments</comments>
+        </documentation>
+    </feature>
+    <feature description="Display coaching data and associated worflow information" enable="true" uid="2">
+        <flipstrategy class="com.nice.saas.wfo.shared.featureToggle.TenantBasedFlippingStrategy">
+            <param name="off_for" value="*" />
+            <param name="on_for" value="-" />
+        </flipstrategy>
+        <documentation>
+            <release>22.1</release>
+            <owner>Owner 22</owner>
+            <dependencies>NA</dependencies>
+            <comments />
+        </documentation>
+    </feature>
+	<feature description="Adding server side search support test" enable="true" uid="3">
+        <flipstrategy class="com.nice.saas.wfo.shared.featureToggle.TenantBasedFlippingStrategy">
+            <param name="off_for" value="*" />
+            <param name="on_for" value="-" />
+        </flipstrategy>
+        <documentation>
+            <release>22.2</release>
+            <owner>Owner 33</owner>
+            <dependencies>NA</dependencies>
+            <comments>NA</comments>
+        </documentation>
+    </feature>
+    <feature description="support schedule optimization" enable="true" uid="4">
+        <flipstrategy class="com.nice.saas.wfo.shared.featureToggle.TenantBasedFlippingStrategy">
+            <param name="off_for" value="*" />
+            <param name="on_for" value="-" />
+        </flipstrategy>
+        <documentation>
+            <release>22.2</release>
+            <owner>Owner 44</owner>
+             <dependencies>Need to ACTIVATE scheduleOptimization entity in product-catalog</dependencies>
+            <comments />
+        </documentation>
+    </feature>
+  <feature description="Used for Separate RTIG billing feature" enable="true" uid="5">
+    <flipstrategy class="com.nice.saas.wfo.shared.featureToggle.TenantBasedFlippingStrategy">
+      <param name="off_for" value="*" />
+      <param name="on_for" value="-" />
+    </flipstrategy>
+    <documentation>
+      <release>22.1</release>
+      <owner>Owner 55</owner>
+      <dependencies />
+      <comments />
+    </documentation>
+  </feature>
+  	<feature description="Adding server side search support" enable="true" uid="6">
+        <flipstrategy class="com.nice.saas.wfo.shared.featureToggle.TenantBasedFlippingStrategy">
+            <param name="off_for" value="*" />
+            <param name="on_for" value="-" />
+        </flipstrategy>
+        <documentation>
+            <release>22.2</release>
+            <owner>Owner 6</owner>
+            <dependencies>NA</dependencies>
+            <comments>NA</comments>
+        </documentation>
+    </feature>
+</features>

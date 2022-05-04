@@ -1414,11 +1414,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\ronald\\c-sharp\\solution-test1\\release-tracker\\release-tracker.csproj",
+      "projectUniqueName": "E:\\ronald\\personal\\work-space-utils\\c-sharp\\solution-test1\\release-tracker\\release-tracker.csproj",
       "projectName": "release-tracker",
-      "projectPath": "E:\\ronald\\c-sharp\\solution-test1\\release-tracker\\release-tracker.csproj",
+      "projectPath": "E:\\ronald\\personal\\work-space-utils\\c-sharp\\solution-test1\\release-tracker\\release-tracker.csproj",
       "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-      "outputPath": "E:\\ronald\\c-sharp\\solution-test1\\release-tracker\\obj\\",
+      "outputPath": "E:\\ronald\\personal\\work-space-utils\\c-sharp\\solution-test1\\release-tracker\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KWUtiR6JCPlgGNWglscV3D/QQmwixkAnFXPKEiqheP1PTQbyVfnrUznlH4Wqk+x5Sytxb5cs/uFgm/wkrFE9Xw==",
+  "dgSpecHash": "Fh/EGYONsC2aoDifCcOdWiluXLiQz4eC8LGlbaG5AuNV423aJEdxPDE98j4EpJcB/itxbq4BbMcX4Z1/rs79gw==",
   "success": true,
-  "projectFilePath": "E:\\ronald\\c-sharp\\solution-test1\\release-tracker-tests\\release-tracker-tests.csproj",
+  "projectFilePath": "E:\\ronald\\personal\\work-space-utils\\c-sharp\\solution-test1\\release-tracker-tests\\release-tracker-tests.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\User\\.nuget\\packages\\coverlet.collector\\3.1.0\\coverlet.collector.3.1.0.nupkg.sha512",
     "C:\\Users\\User\\.nuget\\packages\\microsoft.codecoverage\\16.11.0\\microsoft.codecoverage.16.11.0.nupkg.sha512",
