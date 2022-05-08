@@ -112,7 +112,7 @@ namespace release_tracker.LocalDataAccess
             return releaseFile;
         }
 
-        private string ReadFile(String location)
+        public static string ReadFile(String location)
         {
             string data = "";
             FileStream fileStream = new FileStream(location, FileMode.Open, FileAccess.Read);
@@ -123,7 +123,7 @@ namespace release_tracker.LocalDataAccess
             return data;
         }
 
-        private string WriteFile(string location, string content) {
+        public static string WriteFile(string location, string content) {
 
             FileStream fileStream = new FileStream(location, FileMode.OpenOrCreate, FileAccess.ReadWrite);            
             using (StreamWriter sw = new StreamWriter(fileStream))

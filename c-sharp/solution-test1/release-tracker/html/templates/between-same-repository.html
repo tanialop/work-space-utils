@@ -7,10 +7,17 @@
     <title>Document</title>
 </head>
 <body>
+    <!-- @table -->
+    <!-- @tableDefinition -->
     <table border="1" cellspacing="0" cellpadding="5px" style="border: 1px solid rgb(146, 140, 140); border-collapse: collapse;">
+    <!-- @tableDefinition@ -->
+        <!-- @tableTitle -->
         <thead>
-            <tr colspan="4">Between Same Repository</tr>
+            <tr colspan="4">{{titleTable}}</tr>
         </thead>
+        <!-- @tableTitle@ -->
+        
+        <!-- @tableBody -->
         <tbody>
             <!-- @ColumnNames -->
             <tr style="color: white; background-color: #00bfff; text-align: center; font-weight: bold;">
@@ -28,15 +35,15 @@
                 <td rowspan="6" style="text-align:center; background-color: #cbe5ee;">{{repositoryName}}Stage</td>
                 <!-- @RepositoryName@ -->
 
-                <!-- @FeatureName -->
+                <!-- @FeatureID -->
                 <td rowspan="2" style="text-align:center;">{{featureID}}1111</td>
-                <!-- @FeatureName@ -->
+                <!-- @FeatureID@ -->
 
                 <!-- @FieldName -->
                 <td>{{fieldName}}Description</td>
                 <!-- @FieldName@ -->
 
-                <!-- @Update -->
+                <!-- @Updated -->
                 <td>
                     <span style="color: rgb(63, 61, 61);">
                         <span style="font-weight: bold; color: rgb(66, 65, 65);">Old Value: </span>
@@ -47,7 +54,7 @@
                          {{newValue}} User for testing 1
                     </span>                    
                 </td>
-                <!-- @Update@ -->
+                <!-- @Updated@ -->
 
                 <!-- @Deleted -->
                 <td style="text-align: center;" >{{deleted}}false</td>
@@ -92,6 +99,8 @@
             </tr>
             <!-- @Repository@ -->
         </tbody>
+        <!-- @tableBody -->
     </table>
+    <!-- @table@ -->
 </body>
 </html>

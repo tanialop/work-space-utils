@@ -12,18 +12,25 @@ using System.Xml;
 //Console.WriteLine("Hello, World!");
 //Console.WriteLine("Hello, World!");
 
+IConfiguration configuration = GetConfig();
+
 
 ReleaseFileFacade releaseFileFacade = Factory.GetReleaseFileFacade(GetConfig());
 releaseFileFacade.DownloadReleaseFileBeforeRelease();
 releaseFileFacade.DownloadReleaseFileAfterRelease();
 
 List<ReportRelease> reportReleases = releaseFileFacade.CompareReleaseFilesOnAllRepositories("22.1", "22.2");
+HtmlReport htmlReport = new HtmlReport(configuration);
+htmlReport.generateReportSameRepository(reportReleases);
 
 //ReportRelease.PrintOnConsole(reportReleases);
 
-List<ReportCompareRepositories> reportCompareRepositories = releaseFileFacade.CompareReleaseBetweenAllRepositories("22.2");
-Console.WriteLine("##############################################");
-Console.WriteLine(releaseFileFacade.GetReportAsJson(reportCompareRepositories));
+//List<ReportCompareRepositories> reportCompareRepositories = releaseFileFacade.CompareReleaseBetweenAllRepositories("22.2");
+//Console.WriteLine("##############################################");
+//Console.WriteLine(releaseFileFacade.GetReportAsJson(reportCompareRepositories));
+
+
+
 
 
 
