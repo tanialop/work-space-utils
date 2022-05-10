@@ -36,6 +36,7 @@ namespace release_tracker.Models
         public FeatureUpdated(Feature oldFeature, Feature newFeature) { 
             this.oldFeature = oldFeature;
             this.newFeature = newFeature;
+            BuildDiff();
         }
 
         public FeatureUpdated BuildDiff() {

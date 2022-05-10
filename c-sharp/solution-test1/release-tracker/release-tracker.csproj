@@ -23,7 +23,9 @@
 
   <ItemGroup>
     <Folder Include="html\output\" />
-    <Folder Include="LocalDataAccess\localStore\" />
+    <Folder Include="LocalDataAccess\localStore\Japan\" />
+    <Folder Include="LocalDataAccess\localStore\Production\" />
+    <Folder Include="LocalDataAccess\localStore\Stage\" />
   </ItemGroup>
 
 </Project>

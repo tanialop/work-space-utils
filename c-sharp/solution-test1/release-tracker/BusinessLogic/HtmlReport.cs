@@ -11,7 +11,8 @@ namespace release_tracker.BusinessLogic
 {
     public class HtmlReport
     {
-        public string FILE_TEMPLATE = "";
+        public static string FILE_TEMPLATE = "";
+        public static string FILE_OUTPUT_SAME_SERVER = "";
 
         private readonly IConfiguration configuration;
 
@@ -19,6 +20,7 @@ namespace release_tracker.BusinessLogic
         {
             this.configuration = configuration;
             FILE_TEMPLATE =(string) this.configuration["htmlFileTemplate"];
+            FILE_OUTPUT_SAME_SERVER = string.Format("{0}{1}", (string)this.configuration["htmlFileOutput"], "report.same.server.html");
         }
 
         public string generateReportSameRepository(List<ReportRelease> reportReleases)
@@ -26,14 +28,16 @@ namespace release_tracker.BusinessLogic
             string filePath = "";
 
             string html = ReleaseLocalDataAccess.ReadFile(FILE_TEMPLATE);
-            GetHtmlPage(html);
-            GetTableColumnNames(html);
-            GetTableColumnRepositoryName(html);
-            GetTableColumnFeatureId(html);
-            GetTableColumnFieldName(html);
-            GetTableColumnUpdated(html);
-            GetTableColumnDeleted(html);
-            
+            BuildHtmlTable(html, reportReleases);
+            //GetHtmlPage(html);
+            //GetTableRowColumnNames(html);
+            //GetTableColumnRepositoryName(html);
+            //GetTableColumnFeatureId(html);
+            //GetTableColumnFieldName(html);
+            //GetTableColumnUpdated(html);
+            //GetTableColumnDeleted(html);
+            //GetTableColumnFeatureDeleted(html);
+
 
             return filePath;
 
@@ -41,107 +45,301 @@ namespace release_tracker.BusinessLogic
 
         private string BuildHtmlTable(string html, List<ReportRelease> reportReleases)
         {
-            string table = GetTableDefinition(html);
-            table = table + GetTableColumnNames(html);
-
             string htmlFieldNameTemplate = GetTableColumnFieldName(html);
-            string htmlFeatureUpdatedTemplate = GetTableColumnUpdated(html);
-            string htmlFeatureDeletedTemplate = GetTableColumnFeatureDeleted(html);
+            string htmlFeatureUpdatedTemplate = GetTableColumnUpdated(html);            
             string htmlWasDeletedTemplate = GetTableColumnDeleted(html);
-            foreach(ReportRelease release in reportReleases)
+            
+            string htmlColumnFeatureId = GetTableColumnFeatureId(html);
+            
+            
+            List<string> columnValues = new List<string>();            
+            columnValues.Add(GetTableRowColumnNames(html));
+
+            List<string> rowRepositories = new List<string>();
+            
+            //ReportRelease release = reportReleases[0];
+            foreach (ReportRelease release in reportReleases)
             {
-                List<string> columnValues = new List<string>();
-                foreach(FeatureUpdated featureUpdated in release.UpdatedFeatures)
-                {
-                    if (featureUpdated.Version.Updated)
-                    {
-                        var htmlFieldNameValue = htmlFieldNameTemplate
-                            .Replace("{{fieldName}}", "Version");
+                var htmlReportRepository = GetHtmlRowRepositoryChangedFeatures(release, html);
 
-                        var htmlUpdatedValue = htmlFeatureUpdatedTemplate
-                            .Replace("{{oldValue}}", featureUpdated.Version.OldValue)
-                            .Replace("{{newValue}}", featureUpdated.Version.NewValue);
+                rowRepositories.Add(htmlReportRepository);
+            }
+            string table = string.Format("{0}{1}{2}{3}", GetTableDefinition(html), GetTableRowColumnNames(html), "{{tableBody}}", "</table>");
+            table = table.Replace("{{tableBody}}", string.Join("", rowRepositories));
 
-                        var htmlDeletedValue = htmlWasDeletedTemplate.Replace("{{deleted}}", "false");
+            ReleaseLocalDataAccess.WriteFile(FILE_OUTPUT_SAME_SERVER, table);
 
-                        columnValues.Add(htmlFieldNameValue);
-                        columnValues.Add(htmlUpdatedValue);
-                        columnValues.Add(htmlDeletedValue);
-                    }
+            return table;
 
-                    if (featureUpdated.Description.Updated)
-                    {
-                        var htmlFieldNameValue = htmlFieldNameTemplate
-                            .Replace("{{fieldName}}", "Description");
+            //columnValues = new List<string>();
 
-                        var htmlUpdatedValue = htmlFeatureUpdatedTemplate
-                            .Replace("{{oldValue}}", featureUpdated.Description.OldValue)
-                            .Replace("{{newValue}}", featureUpdated.Description.NewValue);
+            //firstColumnRepositoryName = GetTableColumnRepositoryName(html)
+            //    // .Replace("{{rowspanrepositoryName}}", rowValues.Count + "") // it will be replace as last step.
+            //    .Replace("{{repositoryName}}", release.RepositoryName);
+            //columnValues.Add(firstColumnRepositoryName);
 
-                        var htmlDeletedValue = htmlWasDeletedTemplate.Replace("{{deleted}}", "false");
+            //string htmlFeatureDeletedTemplate = GetTableColumnFeatureDeleted(html);
+            //foreach (Feature feature in release.DeletedFeatures)
+            //{                    
+            //    var htmlColumnFeatureIdValue =  htmlColumnFeatureId
+            //        //.Replace("{{rowspanFeatureID}}", "0")
+            //        .Replace("{{featureID}}", feature.Id + "");
 
-                        columnValues.Add(htmlFieldNameValue);
-                        columnValues.Add(htmlUpdatedValue);
-                        columnValues.Add(htmlDeletedValue);
-                    }
+            //    if (columnValues.Count == 0)
+            //    {
+            //        columnValues.Add(htmlColumnFeatureIdValue);
+            //    }
 
-                    if (featureUpdated.Owner.Updated)
-                    {
-                        var htmlFieldNameValue = htmlFieldNameTemplate
-                            .Replace("{{fieldName}}", "Owner");
+            //    var htmlColumnFieldNameValue = htmlFeatureDeletedTemplate
+            //            .Replace("{{description}}", feature.Description)
+            //            .Replace("{{owner}}", feature.Owner)
+            //            .Replace("{{version}}", feature.ReleaseVersion)
+            //            .Replace("{{offFor}}", feature.StrategyOffFor)
+            //            .Replace("{{onFor}}", feature.StrategyOnFor);
 
-                        var htmlUpdatedValue = htmlFeatureUpdatedTemplate
-                            .Replace("{{oldValue}}", featureUpdated.Owner.OldValue)
-                            .Replace("{{newValue}}", featureUpdated.Owner.NewValue);
+            //    var htmlColumnWasDeletedValue = htmlWasDeletedTemplate
+            //        .Replace("{{deleted}}", "true");
 
-                        var htmlDeletedValue = htmlWasDeletedTemplate.Replace("{{deleted}}", "false");
 
-                        columnValues.Add(htmlFieldNameValue);
-                        columnValues.Add(htmlUpdatedValue);
-                        columnValues.Add(htmlDeletedValue);
-                    }
 
-                    if (featureUpdated.OffFor.Updated)
-                    {
-                        var htmlFieldNameValue = htmlFieldNameTemplate
-                            .Replace("{{fieldName}}", "OffFor");
+            //    columnValues.Add(htmlColumnFieldNameValue);
+            //    columnValues.Add(htmlColumnWasDeletedValue);
 
-                        var htmlUpdatedValue = htmlFeatureUpdatedTemplate
-                            .Replace("{{oldValue}}", featureUpdated.OffFor.OldValue)
-                            .Replace("{{newValue}}", featureUpdated.OffFor.NewValue);
+            //    string rows = GetFirstRowAddingColumn(string.Join("", columnValues));
+            //    rowRepository.Add(rows);
+            //}
 
-                        var htmlDeletedValue = htmlWasDeletedTemplate.Replace("{{deleted}}", "false");
+            //var htmlReportRepository = string.Join("", rowRepository).Replace("{{rowspanrepositoryName}}", rowRepository.Count + "");
+            //rowRepositories.Add(htmlReportRepository);
+            //}
 
-                        columnValues.Add(htmlFieldNameValue);
-                        columnValues.Add(htmlUpdatedValue);
-                        columnValues.Add(htmlDeletedValue);
-                    }
 
-                    if (featureUpdated.OnFor.Updated)
-                    {
-                        var htmlFieldNameValue = htmlFieldNameTemplate
-                            .Replace("{{fieldName}}", "OnFor");
 
-                        var htmlUpdatedValue = htmlFeatureUpdatedTemplate
-                            .Replace("{{oldValue}}", featureUpdated.OnFor.OldValue)
-                            .Replace("{{newValue}}", featureUpdated.OnFor.NewValue);
+            //string table = string.Format("{0}{1}{2}", GetTableDefinition(html), "{{tableBody}}", "</table>");
+            //table = table.Replace("{{tableBody}}", string.Join("", rowRepositories));
 
-                        var htmlDeletedValue = htmlWasDeletedTemplate.Replace("{{deleted}}", "false");
+            //ReleaseLocalDataAccess.WriteFile(FILE_OUTPUT_SAME_SERVER, table);
 
-                        columnValues.Add(htmlFieldNameValue);
-                        columnValues.Add(htmlUpdatedValue);
-                        columnValues.Add(htmlDeletedValue);
-                    }                  
-                }
+            //return table;
+        }
 
-                foreach(Feature feature in release.DeletedFeatures)
-                {
-                    // we need a template for this, becuase we will need to display all field of old feature.
-                }
+        private string GetHtmlRowRepositoryChangedFeatures(ReportRelease release, string html)
+        {
+            var rowRepository = new List<string>();
+
+            int numRows = 0;
+            bool addRepositoryColumnName = true;
+            foreach (FeatureUpdated featureUpdated in release.UpdatedFeatures)
+            {
+                var keyValue = GetPartialHtmlRowFeatureChanged(featureUpdated, html, addRepositoryColumnName);
+                numRows = numRows + keyValue.Key;
+                addRepositoryColumnName = false;
+
+                rowRepository.Add(keyValue.Value);
             }
 
-            table = table + "</table>";
-            return table;
+            var htmlReportRepository = string.Join("", rowRepository)
+                .Replace("{{rowspanRepositoryName}}", numRows + "")
+                .Replace("{{repositoryName}}", release.RepositoryName);
+            return htmlReportRepository;
+        }
+
+        private KeyValuePair<int, string> GetPartialHtmlRowFeatureChanged(FeatureUpdated featureUpdated, string htmlTemplate, bool addRepositoryColumnName) {
+            string htmlFieldNameTemplate = GetTableColumnFieldName(htmlTemplate);
+            string htmlFeatureUpdatedTemplate = GetTableColumnUpdated(htmlTemplate);
+            string htmlWasDeletedTemplate = GetTableColumnDeleted(htmlTemplate);
+
+            string htmlColumnFeatureId = GetTableColumnFeatureId(htmlTemplate);
+
+            bool featureIdWasAdded = false;
+            bool repositoryColumnWasAdded = false;
+            
+            var htmlRowFeatures = new List<string>();
+            // column Version
+            if (featureUpdated.Version.Updated)
+            {
+                List<string> columns = new List<string>();
+                var htmlFieldNameValue = htmlFieldNameTemplate
+                    .Replace("{{fieldName}}", "Version");
+
+                var htmlUpdatedValue = htmlFeatureUpdatedTemplate
+                    .Replace("{{oldValue}}", featureUpdated.Version.OldValue)
+                    .Replace("{{newValue}}", featureUpdated.Version.NewValue);
+
+                var htmlDeletedValue = htmlWasDeletedTemplate.Replace("{{deleted}}", "false");
+
+                if (!featureIdWasAdded)
+                {
+                    var featureColumn = htmlColumnFeatureId
+                        //.Replace("{{rowspanFeatureID}}", columnValues.Count() + "")
+                        .Replace("{{featureID}}", featureUpdated.Id + "");
+                    columns.Add(featureColumn);
+                    featureIdWasAdded = true;
+                }
+
+                if (!repositoryColumnWasAdded && addRepositoryColumnName)
+                {
+                    var htmlRepositoryName = GetTableColumnRepositoryName(htmlTemplate);
+                    columns.Insert(0, htmlRepositoryName);
+                    repositoryColumnWasAdded = true;
+                }
+
+                columns.Add(htmlFieldNameValue);
+                columns.Add(htmlUpdatedValue);
+                columns.Add(htmlDeletedValue);
+
+                string row = GetFirstRowAddingColumn(String.Join("", columns));
+                htmlRowFeatures.Add(row);
+            }
+            // column Description
+            if (featureUpdated.Description.Updated)
+            {
+                var htmlFieldNameValue = htmlFieldNameTemplate
+                    .Replace("{{fieldName}}", "Description");
+
+                var htmlUpdatedValue = htmlFeatureUpdatedTemplate
+                    .Replace("{{oldValue}}", featureUpdated.Description.OldValue)
+                    .Replace("{{newValue}}", featureUpdated.Description.NewValue);
+
+                var htmlDeletedValue = htmlWasDeletedTemplate.Replace("{{deleted}}", "false");
+
+                List<string> columns = new List<string>();
+                if (!featureIdWasAdded)
+                {
+                    var featureColumn = htmlColumnFeatureId
+                        //.Replace("{{rowspanFeatureID}}", columnValues.Count() + "")
+                        .Replace("{{featureID}}", featureUpdated.Id + "");
+                    columns.Add(featureColumn);
+                    featureIdWasAdded = true;
+                }
+
+                if (!repositoryColumnWasAdded && addRepositoryColumnName)
+                {
+                    var htmlRepositoryName = GetTableColumnRepositoryName(htmlTemplate);
+                    columns.Insert(0, htmlRepositoryName);
+                    repositoryColumnWasAdded = true;
+                }
+
+                columns.Add(htmlFieldNameValue);
+                columns.Add(htmlUpdatedValue);
+                columns.Add(htmlDeletedValue);
+
+                string row = GetFirstRowAddingColumn(String.Join("", columns));
+                htmlRowFeatures.Add(row);
+            }
+            // column Owner
+            if (featureUpdated.Owner.Updated)
+            {
+                var htmlFieldNameValue = htmlFieldNameTemplate
+                    .Replace("{{fieldName}}", "Owner");
+
+                var htmlUpdatedValue = htmlFeatureUpdatedTemplate
+                    .Replace("{{oldValue}}", featureUpdated.Owner.OldValue)
+                    .Replace("{{newValue}}", featureUpdated.Owner.NewValue);
+
+                var htmlDeletedValue = htmlWasDeletedTemplate.Replace("{{deleted}}", "false");
+
+                var columns = new List<string>();
+                if (!featureIdWasAdded)
+                {
+                    var featureColumn = htmlColumnFeatureId
+                        //.Replace("{{rowspanFeatureID}}", columnValues.Count() + "")
+                        .Replace("{{featureID}}", featureUpdated.Id + "");
+                    columns.Add(featureColumn);
+                    featureIdWasAdded = true;
+                }
+
+                if (!repositoryColumnWasAdded && addRepositoryColumnName)
+                {
+                    var htmlRepositoryName = GetTableColumnRepositoryName(htmlTemplate);
+                    columns.Insert(0, htmlRepositoryName);
+                    repositoryColumnWasAdded = true;
+                }
+
+                columns.Add(htmlFieldNameValue);
+                columns.Add(htmlUpdatedValue);
+                columns.Add(htmlDeletedValue);
+
+                string row = GetFirstRowAddingColumn(String.Join("", columns));
+                htmlRowFeatures.Add(row);
+            }
+            // column OffFor
+            if (featureUpdated.OffFor.Updated)
+            {
+                var htmlFieldNameValue = htmlFieldNameTemplate
+                    .Replace("{{fieldName}}", "OffFor");
+
+                var htmlUpdatedValue = htmlFeatureUpdatedTemplate
+                    .Replace("{{oldValue}}", featureUpdated.OffFor.OldValue)
+                    .Replace("{{newValue}}", featureUpdated.OffFor.NewValue);
+
+                var htmlDeletedValue = htmlWasDeletedTemplate.Replace("{{deleted}}", "false");
+
+                var columns = new List<string>();
+                if (!featureIdWasAdded)
+                {
+                    var featureColumn = htmlColumnFeatureId
+                        //.Replace("{{rowspanFeatureID}}", columnValues.Count() + "")
+                        .Replace("{{featureID}}", featureUpdated.Id + "");
+                    columns.Add(featureColumn);
+                    featureIdWasAdded = true;
+                }
+
+                if (!repositoryColumnWasAdded && addRepositoryColumnName)
+                {
+                    var htmlRepositoryName = GetTableColumnRepositoryName(htmlTemplate);
+                    columns.Insert(0, htmlRepositoryName);
+                    repositoryColumnWasAdded = true;
+                }
+
+                columns.Add(htmlFieldNameValue);
+                columns.Add(htmlUpdatedValue);
+                columns.Add(htmlDeletedValue);
+
+                string row = GetFirstRowAddingColumn(String.Join("", columns));
+                htmlRowFeatures.Add(row);
+            }
+            // column OnFor
+            if (featureUpdated.OnFor.Updated)
+            {
+                var htmlFieldNameValue = htmlFieldNameTemplate
+                    .Replace("{{fieldName}}", "OnFor");
+
+                var htmlUpdatedValue = htmlFeatureUpdatedTemplate
+                    .Replace("{{oldValue}}", featureUpdated.OnFor.OldValue)
+                    .Replace("{{newValue}}", featureUpdated.OnFor.NewValue);
+
+                var htmlDeletedValue = htmlWasDeletedTemplate.Replace("{{deleted}}", "false");
+
+                var columns = new List<string>();
+                if (!featureIdWasAdded)
+                {
+                    var featureColumn = htmlColumnFeatureId
+                        //.Replace("{{rowspanFeatureID}}", columnValues.Count() + "")
+                        .Replace("{{featureID}}", featureUpdated.Id + "");
+                    columns.Add(featureColumn);
+                    featureIdWasAdded = true;
+                }
+
+                if (!repositoryColumnWasAdded && addRepositoryColumnName)
+                {
+                    var htmlRepositoryName = GetTableColumnRepositoryName(htmlTemplate);
+                    columns.Insert(0, htmlRepositoryName);
+                    repositoryColumnWasAdded = true;
+                }
+
+                columns.Add(htmlFieldNameValue);
+                columns.Add(htmlUpdatedValue);
+                columns.Add(htmlDeletedValue);
+
+                string row = GetFirstRowAddingColumn(String.Join("", columns));
+                htmlRowFeatures.Add(row);
+            }
+
+            
+
+            var htmlRowsFeature = string.Join("", htmlRowFeatures).Replace("{{rowspanFeatureID}}", htmlRowFeatures.Count() + "");            
+            return new KeyValuePair<int, string>(htmlRowFeatures.Count, htmlRowsFeature);
         }
 
         private string GetHtmlPage(string html)
@@ -156,7 +354,7 @@ namespace release_tracker.BusinessLogic
             return htmlTmpl;
         }
 
-        private string GetTableColumnNames(string html) {            
+        private string GetTableRowColumnNames(string html) {            
 
             int startIndex = html.IndexOf("<!-- @ColumnNames -->");
             int endIndex = html.IndexOf("<!-- @ColumnNames@ -->");
@@ -213,9 +411,9 @@ namespace release_tracker.BusinessLogic
 
         private string GetTableColumnFeatureDeleted(string html)
         {
-            int startIndex = html.IndexOf("<!-- @Updated -->");
-            int endIndex = html.IndexOf("<!-- @Updated@ -->");
-            int count = (endIndex - startIndex) + "<!-- @Updated@ -->".Length;
+            int startIndex = html.IndexOf("<!-- @FeatureDeletedData  -->");
+            int endIndex = html.IndexOf("<!-- @FeatureDeletedData@  -->");
+            int count = (endIndex - startIndex) + "<!-- @FeatureDeletedData@  -->".Length;
 
             var htmlTmpl = html.Substring(startIndex, count);
             Console.WriteLine(htmlTmpl);
@@ -242,6 +440,24 @@ namespace release_tracker.BusinessLogic
             var htmlTmpl = html.Substring(startIndex, count);
             Console.WriteLine(htmlTmpl);
             return htmlTmpl;
+        }
+
+        private string GetFirstRowAddingColumn(string htmlColumns)
+        {
+            return string.Format("<tr style=\"background - color: #8fd4eb;\">{0}</tr>", htmlColumns);
+        }
+
+        private string GetSecondRowAddingColumn(string htmlColumns)
+        {
+            return string.Format("<tr style=\"background - color: #b6e0ee;\">{0}</tr>", htmlColumns);
+        }
+
+        private string GetFirstRow() {
+            return string.Format("<tr style=\"background - color: #8fd4eb;\">{{htmlColumns}}</tr>");
+        }
+        private string GetSecondRow()
+        {
+            return string.Format("<tr style=\"background - color: #b6e0ee;\">{{htmlColumns}}</tr>");
         }
     }
 }
