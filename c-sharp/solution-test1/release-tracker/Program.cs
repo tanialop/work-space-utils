@@ -20,7 +20,7 @@ releaseFileFacade.DownloadReleaseFileBeforeRelease();
 releaseFileFacade.DownloadReleaseFileAfterRelease();
 
 List<ReportRelease> reportReleases = releaseFileFacade.CompareReleaseFilesOnAllRepositories("22.1", "22.2");
-HtmlReport htmlReport = new HtmlReport(configuration);
+HtmlReportSameRepository htmlReport = new HtmlReportSameRepository(configuration);
 htmlReport.generateReportSameRepository(reportReleases);
 
 //ReportRelease.PrintOnConsole(reportReleases);

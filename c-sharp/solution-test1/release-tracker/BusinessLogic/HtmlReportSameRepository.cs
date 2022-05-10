@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 
 namespace release_tracker.BusinessLogic
 {
-    public class HtmlReport
+    public class HtmlReportSameRepository
     {
         public static string FILE_TEMPLATE = "";
         public static string FILE_OUTPUT_SAME_SERVER = "";
 
         private readonly IConfiguration configuration;
 
-        public HtmlReport(IConfiguration configuration)
+        public HtmlReportSameRepository(IConfiguration configuration)
         {
             this.configuration = configuration;
             FILE_TEMPLATE =(string) this.configuration["htmlFileTemplate"];
@@ -25,33 +25,18 @@ namespace release_tracker.BusinessLogic
 
         public string generateReportSameRepository(List<ReportRelease> reportReleases)
         {
-            string filePath = "";
-
             string html = ReleaseLocalDataAccess.ReadFile(FILE_TEMPLATE);
-            BuildHtmlTable(html, reportReleases);
-            //GetHtmlPage(html);
-            //GetTableRowColumnNames(html);
-            //GetTableColumnRepositoryName(html);
-            //GetTableColumnFeatureId(html);
-            //GetTableColumnFieldName(html);
-            //GetTableColumnUpdated(html);
-            //GetTableColumnDeleted(html);
-            //GetTableColumnFeatureDeleted(html);
 
+            string table = BuildHtmlTableSameRepository(html, reportReleases);
+
+            var filePath = ReleaseLocalDataAccess.WriteFile(FILE_OUTPUT_SAME_SERVER, table);
 
             return filePath;
 
         }
 
-        private string BuildHtmlTable(string html, List<ReportRelease> reportReleases)
-        {
-            string htmlFieldNameTemplate = GetTableColumnFieldName(html);
-            string htmlFeatureUpdatedTemplate = GetTableColumnUpdated(html);            
-            string htmlWasDeletedTemplate = GetTableColumnDeleted(html);
-            
-            string htmlColumnFeatureId = GetTableColumnFeatureId(html);
-            
-            
+        private string BuildHtmlTableSameRepository(string html, List<ReportRelease> reportReleases)
+        {   
             List<string> columnValues = new List<string>();            
             columnValues.Add(GetTableRowColumnNames(html));
 
@@ -60,70 +45,97 @@ namespace release_tracker.BusinessLogic
             //ReportRelease release = reportReleases[0];
             foreach (ReportRelease release in reportReleases)
             {
-                var htmlReportRepository = GetHtmlRowRepositoryChangedFeatures(release, html);
+                // Rows for updated features.
+                KeyValuePair<int, string> keyValueUpdatedFeature = GetHtmlRowRepositoryChangedFeatures(release, html);
+                var htmlRowsUpdatedFeatures = keyValueUpdatedFeature.Value;
+                var numRowsByRepository = keyValueUpdatedFeature.Key;
 
-                rowRepositories.Add(htmlReportRepository);
+                // rowRepositories.Add(htmlReportRepository);
+
+                // Rows for deleted features.
+                var addRepositoryColumnName = false;
+                if (numRowsByRepository == 0)
+                {
+                    addRepositoryColumnName = true;
+                }
+                KeyValuePair<int, string> keyValueDeletedFeature = GetHtmlRowsRepositoryDeletedFeatures(release, html, addRepositoryColumnName);
+                var htmlRowsDeletedFeatures = keyValueDeletedFeature.Value;
+                numRowsByRepository = numRowsByRepository + keyValueDeletedFeature.Key;                                
+
+                if(keyValueUpdatedFeature.Key > 0)
+                {
+                    htmlRowsUpdatedFeatures = string.Join("", htmlRowsUpdatedFeatures)
+                    .Replace("{{rowspanRepositoryName}}", numRowsByRepository + "")
+                    .Replace("{{repositoryName}}", release.RepositoryName);
+                    rowRepositories.Add(htmlRowsUpdatedFeatures);
+                } else
+                {
+                    htmlRowsDeletedFeatures = string.Join("", htmlRowsDeletedFeatures)
+                    .Replace("{{rowspanRepositoryName}}", numRowsByRepository + "")
+                    .Replace("{{repositoryName}}", release.RepositoryName);
+                }
+                
+                if(keyValueDeletedFeature.Key > 0)
+                {                   
+
+                    rowRepositories.Add(htmlRowsDeletedFeatures);
+                }                                
             }
-            string table = string.Format("{0}{1}{2}{3}", GetTableDefinition(html), GetTableRowColumnNames(html), "{{tableBody}}", "</table>");
-            table = table.Replace("{{tableBody}}", string.Join("", rowRepositories));
 
-            ReleaseLocalDataAccess.WriteFile(FILE_OUTPUT_SAME_SERVER, table);
+            string table = string.Format("{0}{1}{2}{3}", GetTableDefinition(html), GetTableRowColumnNames(html), "{{tableBody}}", "</table>");
+            table = table.Replace("{{tableBody}}", string.Join("", rowRepositories));            
 
             return table;
-
-            //columnValues = new List<string>();
-
-            //firstColumnRepositoryName = GetTableColumnRepositoryName(html)
-            //    // .Replace("{{rowspanrepositoryName}}", rowValues.Count + "") // it will be replace as last step.
-            //    .Replace("{{repositoryName}}", release.RepositoryName);
-            //columnValues.Add(firstColumnRepositoryName);
-
-            //string htmlFeatureDeletedTemplate = GetTableColumnFeatureDeleted(html);
-            //foreach (Feature feature in release.DeletedFeatures)
-            //{                    
-            //    var htmlColumnFeatureIdValue =  htmlColumnFeatureId
-            //        //.Replace("{{rowspanFeatureID}}", "0")
-            //        .Replace("{{featureID}}", feature.Id + "");
-
-            //    if (columnValues.Count == 0)
-            //    {
-            //        columnValues.Add(htmlColumnFeatureIdValue);
-            //    }
-
-            //    var htmlColumnFieldNameValue = htmlFeatureDeletedTemplate
-            //            .Replace("{{description}}", feature.Description)
-            //            .Replace("{{owner}}", feature.Owner)
-            //            .Replace("{{version}}", feature.ReleaseVersion)
-            //            .Replace("{{offFor}}", feature.StrategyOffFor)
-            //            .Replace("{{onFor}}", feature.StrategyOnFor);
-
-            //    var htmlColumnWasDeletedValue = htmlWasDeletedTemplate
-            //        .Replace("{{deleted}}", "true");
-
-
-
-            //    columnValues.Add(htmlColumnFieldNameValue);
-            //    columnValues.Add(htmlColumnWasDeletedValue);
-
-            //    string rows = GetFirstRowAddingColumn(string.Join("", columnValues));
-            //    rowRepository.Add(rows);
-            //}
-
-            //var htmlReportRepository = string.Join("", rowRepository).Replace("{{rowspanrepositoryName}}", rowRepository.Count + "");
-            //rowRepositories.Add(htmlReportRepository);
-            //}
-
-
-
-            //string table = string.Format("{0}{1}{2}", GetTableDefinition(html), "{{tableBody}}", "</table>");
-            //table = table.Replace("{{tableBody}}", string.Join("", rowRepositories));
-
-            //ReleaseLocalDataAccess.WriteFile(FILE_OUTPUT_SAME_SERVER, table);
-
-            //return table;
         }
 
-        private string GetHtmlRowRepositoryChangedFeatures(ReportRelease release, string html)
+        public KeyValuePair<int, string> GetHtmlRowsRepositoryDeletedFeatures(ReportRelease release, string html, bool addRepositoryColumnName)
+        {
+            var rowRepository = new List<string>();
+
+            string htmlColumnFeatureId = GetTableColumnFeatureId(html);
+            string htmlFeatureDeletedTemplate = GetTableColumnFeatureDeleted(html);
+            string htmlWasDeletedTemplate = GetTableColumnDeleted(html);
+
+            
+            foreach (Feature feature in release.DeletedFeatures)
+            {
+                var columns = new List<string>();                
+
+                if (addRepositoryColumnName)
+                {
+                    var htmlRepositoryName = GetTableColumnRepositoryName(html)
+                        .Replace("{{repositoryName}}", release.RepositoryName);
+                    columns.Add(htmlRepositoryName);
+                }
+
+                var htmlColumnFeatureIdValue = htmlColumnFeatureId
+                    //.Replace("{{rowspanFeatureID}}", "0")
+                    .Replace("{{featureID}}", feature.Id + "");
+                columns.Add(htmlColumnFeatureIdValue);
+
+                var htmlColumnFieldNameValue = htmlFeatureDeletedTemplate
+                        .Replace("{{description}}", feature.Description)
+                        .Replace("{{owner}}", feature.Owner)
+                        .Replace("{{version}}", feature.ReleaseVersion)
+                        .Replace("{{offFor}}", feature.StrategyOffFor)
+                        .Replace("{{onFor}}", feature.StrategyOnFor);
+
+                var htmlColumnWasDeletedValue = htmlWasDeletedTemplate
+                    .Replace("{{deleted}}", "true");
+
+
+
+                columns.Add(htmlColumnFieldNameValue);
+                columns.Add(htmlColumnWasDeletedValue);
+
+                string rows = GetFirstRowAddingColumn(string.Join("", columns));
+                rowRepository.Add(rows);
+            }
+
+            return new KeyValuePair<int, string>(rowRepository.Count, string.Join("", rowRepository));            
+        }
+
+        private KeyValuePair<int, string> GetHtmlRowRepositoryChangedFeatures(ReportRelease release, string html)
         {
             var rowRepository = new List<string>();
 
@@ -138,10 +150,10 @@ namespace release_tracker.BusinessLogic
                 rowRepository.Add(keyValue.Value);
             }
 
-            var htmlReportRepository = string.Join("", rowRepository)
-                .Replace("{{rowspanRepositoryName}}", numRows + "")
-                .Replace("{{repositoryName}}", release.RepositoryName);
-            return htmlReportRepository;
+            //var htmlReportRepository = string.Join("", rowRepository)
+            //    .Replace("{{rowspanRepositoryName}}", numRows + "")
+            //    .Replace("{{repositoryName}}", release.RepositoryName);
+            return new KeyValuePair<int, string>(numRows, string.Join("", rowRepository));
         }
 
         private KeyValuePair<int, string> GetPartialHtmlRowFeatureChanged(FeatureUpdated featureUpdated, string htmlTemplate, bool addRepositoryColumnName) {
