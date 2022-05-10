@@ -12,24 +12,24 @@ namespace release_tracker.BusinessLogic
     public class HtmlReportSameRepository
     {
         public static string FILE_TEMPLATE = "";
-        public static string FILE_OUTPUT_SAME_SERVER = "";
+        public static string FILE_OUTPUT = "";
 
         private readonly IConfiguration configuration;
 
         public HtmlReportSameRepository(IConfiguration configuration)
         {
             this.configuration = configuration;
-            FILE_TEMPLATE =(string) this.configuration["htmlFileTemplate"];
-            FILE_OUTPUT_SAME_SERVER = string.Format("{0}{1}", (string)this.configuration["htmlFileOutput"], "report.same.server.html");
+            FILE_TEMPLATE =(string) this.configuration["htmlFileTemplateSameRepository"];
+            FILE_OUTPUT = string.Format("{0}{1}", (string)this.configuration["htmlFileOutput"], "report.same.repository.html");
         }
 
-        public string generateReportSameRepository(List<ReportRelease> reportReleases)
+        public string GenerateReportSameRepository(List<ReportRelease> reportReleases)
         {
             string html = ReleaseLocalDataAccess.ReadFile(FILE_TEMPLATE);
 
             string table = BuildHtmlTableSameRepository(html, reportReleases);
 
-            var filePath = ReleaseLocalDataAccess.WriteFile(FILE_OUTPUT_SAME_SERVER, table);
+            var filePath = ReleaseLocalDataAccess.WriteFile(FILE_OUTPUT, table);
 
             return filePath;
 
@@ -40,9 +40,8 @@ namespace release_tracker.BusinessLogic
             List<string> columnValues = new List<string>();            
             columnValues.Add(GetTableRowColumnNames(html));
 
-            List<string> rowRepositories = new List<string>();
+            List<string> rowRepositories = new List<string>();            
             
-            //ReportRelease release = reportReleases[0];
             foreach (ReportRelease release in reportReleases)
             {
                 // Rows for updated features.
@@ -462,14 +461,6 @@ namespace release_tracker.BusinessLogic
         private string GetSecondRowAddingColumn(string htmlColumns)
         {
             return string.Format("<tr style=\"background - color: #b6e0ee;\">{0}</tr>", htmlColumns);
-        }
-
-        private string GetFirstRow() {
-            return string.Format("<tr style=\"background - color: #8fd4eb;\">{{htmlColumns}}</tr>");
-        }
-        private string GetSecondRow()
-        {
-            return string.Format("<tr style=\"background - color: #b6e0ee;\">{{htmlColumns}}</tr>");
         }
     }
 }

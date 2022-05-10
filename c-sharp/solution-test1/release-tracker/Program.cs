@@ -9,9 +9,6 @@ using release_tracker.Models;
 using System.Text.Json;
 using System.Xml;
 
-//Console.WriteLine("Hello, World!");
-//Console.WriteLine("Hello, World!");
-
 IConfiguration configuration = GetConfig();
 
 
@@ -21,12 +18,13 @@ releaseFileFacade.DownloadReleaseFileAfterRelease();
 
 List<ReportRelease> reportReleases = releaseFileFacade.CompareReleaseFilesOnAllRepositories("22.1", "22.2");
 HtmlReportSameRepository htmlReport = new HtmlReportSameRepository(configuration);
-htmlReport.generateReportSameRepository(reportReleases);
+htmlReport.GenerateReportSameRepository(reportReleases);
 
 //ReportRelease.PrintOnConsole(reportReleases);
 
-//List<ReportCompareRepositories> reportCompareRepositories = releaseFileFacade.CompareReleaseBetweenAllRepositories("22.2");
-//Console.WriteLine("##############################################");
+List<ReportCompareRepositories> reportCompareRepositories = releaseFileFacade.CompareReleaseBetweenAllRepositories("22.2");
+HtmlReportAllRepository htmlReportAllRepository = new HtmlReportAllRepository(configuration);
+htmlReportAllRepository.GenerateReportAllRepositories(reportCompareRepositories);
 //Console.WriteLine(releaseFileFacade.GetReportAsJson(reportCompareRepositories));
 
 

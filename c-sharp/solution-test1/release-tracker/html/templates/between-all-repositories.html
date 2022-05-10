@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- @table -->
+    <!-- @tableDefinition -->
+    <table border="1" cellspacing="0" cellpadding="5px" style="border: 1px solid rgb(146, 140, 140); border-collapse: collapse;">
+    <!-- @tableDefinition@ -->
+        <!-- @tableTitle -->
+        <thead>
+            <tr colspan="4">{{titleTable}}</tr>
+        </thead>
+        <!-- @tableTitle@ -->
+        
+        <!-- @tableBody -->
+        <tbody>
+            <!-- @ColumnNames -->
+            <tr style="color: white; background-color: #00bfff; text-align: center; font-weight: bold;">
+                <td>Repository 1 </br>vs</br>Repository 2</td>
+                <td>Feature UID</td>
+                <td>Field Name</td>
+                <td style="width: 500px;">Values</td>
+                <td>Updated</td>
+            </tr>
+            <!-- @ColumnNames@ -->
+
+            <!-- @Repository -->
+            <tr style="background-color: #b6e0ee;">                
+                <!-- @RepositoryName -->
+                <td rowspan="6" style="text-align:center; background-color: #cbe5ee;">{{repositoryName1}} <br/>vs<br/> {{repositoryName2}}</td>
+                <!-- @RepositoryName@ -->
+
+                <!-- @FeatureID -->
+                <td rowspan="2" style="text-align:center;">{{featureID}}</td>
+                <!-- @FeatureID@ -->
+
+                <!-- @FieldName -->
+                <td>{{fieldName}}</td>
+                <!-- @FieldName@ -->
+
+                <!-- @FieldValue -->
+                <td>
+                    <span style="color: rgb(63, 61, 61);">
+                        <span style="font-weight: bold; color: rgb(66, 65, 65);">Value in Repository 1: </span>
+                        {{valueInRepository1}} User for testing. User for testing. User for testing. User for testing User for testing User for testingUser for testingUser for testing.
+                    </span><br/>
+                    <span style="color: rgb(63, 61, 61);">
+                        <span style="font-weight: bold; color: rgb(66, 65, 65);">Value in Repository 2:</span>
+                         {{valueInRepository2}} User for testing 1
+                    </span>                    
+                </td>
+                <!-- @FieldValue@ -->
+
+                <!-- @Updated -->
+                <td style="text-align: center;" >{{updated}}</td>
+                <!-- @Updated@ -->
+            </tr>
+            <tr style="background-color: #b6e0ee;">                
+                <td>OffFor</td>
+                <td>Old Value: User for testing.<br/>
+                    New Value: User for testing 1
+                </td>
+                <td style="text-align: center;" >false</td>
+            </tr>
+            <!-- Feature 2 -->
+            <tr style="background-color: #8fd4eb;">                
+                <td rowspan="2" style="text-align:center;">222</td>
+                <td>Description</td>
+                <td>Old Value: User for testing.<br/>
+                    New Value: User for testing 1
+                </td>
+                <td>false</td>
+            </tr>
+            <tr style="background-color: #8fd4eb;">                
+                <td>OffFor</td>
+                <td>Old Value: User for testing.<br/>
+                    New Value: User for testing 1
+                </td>
+                <td>false</td>
+            </tr>
+            <!-- @Repository@ -->
+        </tbody>
+        <!-- @tableBody -->
+    </table>
+    <!-- @table@ -->
+</body>
+</html>
