@@ -36,7 +36,7 @@ namespace release_tracker.BusinessLogic
                 mail.Body = html;
 
                 SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("ronald.espinoza.to@gmail.com", "mundolibre3.3.Java1*1");
+                SmtpServer.Credentials = new System.Net.NetworkCredential("username", "passowrd");
                 SmtpServer.EnableSsl = true;
 
                 SmtpServer.Send(mail);
