@@ -15,5 +15,11 @@ namespace release_tracker.BusinessLogic
             ReleaseFileFacade releaseFileFacade = new ReleaseFileFacade(configuration, releaseLocalDataAccess);
             return releaseFileFacade;            
         }
+
+        public static EmailFacade GetEmailFacade(IConfiguration configuration)
+        {
+            var config = new Configuration(configuration);
+            return new EmailFacade(config);
+        }
     }
 }

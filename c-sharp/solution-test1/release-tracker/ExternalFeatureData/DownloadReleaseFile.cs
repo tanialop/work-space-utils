@@ -38,7 +38,7 @@ namespace release_tracker.ExternalFeatureData
 
             foreach (ReleaseRepository repository in this.releaseRepositories) {
                 HttpClient client = new HttpClient();
-                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", repository.Token);
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", repository.Token);
                 string content = client.GetStringAsync(repository.Url).Result;
 
                 ReleaseFile releaseFile = new ReleaseFile();
