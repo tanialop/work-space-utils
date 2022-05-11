@@ -16,31 +16,6 @@ namespace release_tracker.LocalDataAccess
             this.config = config;
         }
 
-        //public ReleaseFile GetReleaseFile() {
-        //    string location = GetReleaseFullFilePath();
-
-        //    ReleaseFile releaseFile = new ReleaseFile();
-        //    releaseFile.Location = location;
-        //    releaseFile.Name = Path.GetFileName(location);
-        //    releaseFile.File = ReadFile(location);
-
-        //    return releaseFile;
-        //}
-
-        //public ReleaseFile SaveReleaseFile(ReleaseFile releaseFile) {
-        //    string path = config.GetSection("localStore")["path"];
-        //    string location = String.Format("{0}{1}", path, releaseFile.Name);
-
-        //    WriteFile(location, releaseFile.File);
-
-        //    ReleaseFile releaseFileReponse = new ReleaseFile();
-        //    releaseFileReponse.Location = location;
-        //    releaseFileReponse.Name = Path.GetFileName(location);
-        //    releaseFileReponse.File = ReadFile(location);
-
-        //    return releaseFile;
-        //}
-
         public ReleaseFile SaveReleaseFile(ReleaseFile releaseFile, string pathLocalStore, string folderName)
         {
             string path = string.Format("{0}{1}", pathLocalStore, folderName);
@@ -125,7 +100,7 @@ namespace release_tracker.LocalDataAccess
 
         public static string WriteFile(string location, string content) {
 
-            FileStream fileStream = new FileStream(location, FileMode.OpenOrCreate, FileAccess.ReadWrite);            
+            FileStream fileStream = new FileStream(location, FileMode.Create, FileAccess.Write);            
             using (StreamWriter sw = new StreamWriter(fileStream))
             {
                 sw.Write(content);
@@ -133,20 +108,5 @@ namespace release_tracker.LocalDataAccess
 
             return location;
         }
-
-        //private String GetReleaseFullFilePath() {
-        //    string path = Directory.GetCurrentDirectory();
-        //    DirectoryInfo? directoryInfo = Directory.GetParent(path).Parent.Parent;
-        //    string location = String.Format("{0}{1}{2}{3}{4}{5}{6}",
-        //        directoryInfo,
-        //        Path.DirectorySeparatorChar,
-        //        "LocalDataAccess",
-        //        Path.DirectorySeparatorChar,
-        //        "xml-input-files",
-        //        Path.DirectorySeparatorChar,
-        //        "toggles.xml");
-
-        //    return location;
-        //}
     }
 }

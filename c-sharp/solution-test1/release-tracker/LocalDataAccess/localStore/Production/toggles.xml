@@ -6,7 +6,7 @@
         </flipstrategy>
         <documentation>
             <release>22.2</release>
-            <owner>Owner 1</owner>
+            <owner>Owner 11</owner>
             <dependencies>No dependencies</dependencies>
             <comments>No comments</comments>
         </documentation>
@@ -18,7 +18,7 @@
         </flipstrategy>
         <documentation>
             <release>22.1</release>
-            <owner>Owner 2</owner>
+            <owner>Owner 22</owner>
             <dependencies>NA</dependencies>
             <comments />
         </documentation>
@@ -30,7 +30,7 @@
         </flipstrategy>
         <documentation>
             <release>22.2</release>
-            <owner>Owner 3</owner>
+            <owner>Owner 33</owner>
             <dependencies>NA</dependencies>
             <comments>NA</comments>
         </documentation>
@@ -42,7 +42,7 @@
         </flipstrategy>
         <documentation>
             <release>22.2</release>
-            <owner>Owner 4</owner>
+            <owner>Owner 44</owner>
              <dependencies>Need to ACTIVATE scheduleOptimization entity in product-catalog</dependencies>
             <comments />
         </documentation>
@@ -54,7 +54,7 @@
     </flipstrategy>
     <documentation>
       <release>22.1</release>
-      <owner>Owner 5</owner>
+      <owner>Owner 55</owner>
       <dependencies />
       <comments />
     </documentation>

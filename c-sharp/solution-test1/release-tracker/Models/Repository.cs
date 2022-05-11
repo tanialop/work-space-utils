@@ -12,6 +12,8 @@ namespace release_tracker.Models
         public string description { get; set; }
         public string fileUrlBeforeRelease { get; set; }
         public string fileUrlAfterRelease { get; set; }
+
+        public string fileUrlRepository { get; set; }
         public string token { get; set; }
         public string pathLocalStore { get; set; }
     }

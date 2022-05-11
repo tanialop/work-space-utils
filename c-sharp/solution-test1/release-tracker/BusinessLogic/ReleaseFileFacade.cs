@@ -25,17 +25,19 @@ namespace release_tracker.BusinessLogic
         {
             List<ReportCompareRepositories> reportCompareRepositories = new List<ReportCompareRepositories>();
 
-            DownloadReleaseFileBeforeRelease();
+            DownloadReleaseFileToCompareBetweenAllRepositories();
 
-            Repository[] repositories = configuration.GetSection("repositories").Get<Repository[]>();
-            Repository[] targetRepositories = configuration.GetSection("repositories").Get<Repository[]>();
-            foreach(Repository repository in repositories)
+            Repository[] repositories = configuration.GetSection("betweenRepositories").Get<Repository[]>();
+            Repository[] targetRepositories = configuration.GetSection("betweenRepositories").Get<Repository[]>();
+            for(int index = 0; index < repositories.Length; index++)
             {
+                Repository repository = repositories[index];
                 ReleaseFile releaseFile1 = releaseLocalDataAccess.GetReleaseFileBeforeRelease(repository.name);
 
-                foreach (Repository targetRepository in targetRepositories)
+                for (int nextIndex = (index + 1); nextIndex < targetRepositories.Length; nextIndex++)
                 {
-                    if(!repository.name.Equals(version, StringComparison.OrdinalIgnoreCase))
+                    Repository targetRepository = targetRepositories[nextIndex];
+                    if (!repository.name.Equals(version, StringComparison.OrdinalIgnoreCase))
                     {
                         ReleaseFile releaseFile2 = releaseLocalDataAccess.GetReleaseFileBeforeRelease(targetRepository.name);
                         List<ReportFeatureDistinctStore> reportReleaseDistinctStores = CompareReleaseFilesDistinctRepositories(
@@ -47,10 +49,50 @@ namespace release_tracker.BusinessLogic
                         report.FeatureUpdated = reportReleaseDistinctStores;
 
                         reportCompareRepositories.Add(report);
-
-                    }                    
+                    }
                 }
             }
+
+            //foreach(Repository repository in repositories)
+            //{
+            //    ReleaseFile releaseFile1 = releaseLocalDataAccess.GetReleaseFileBeforeRelease(repository.name);
+
+            //    for(int nextIndex = 0; nextIndex < targetRepositories.Length; nextIndex++)
+            //    {
+            //        Repository targetRepository = targetRepositories[nextIndex];
+            //        if (!repository.name.Equals(version, StringComparison.OrdinalIgnoreCase))
+            //        {
+            //            ReleaseFile releaseFile2 = releaseLocalDataAccess.GetReleaseFileBeforeRelease(targetRepository.name);
+            //            List<ReportFeatureDistinctStore> reportReleaseDistinctStores = CompareReleaseFilesDistinctRepositories(
+            //                releaseFile1, releaseFile2, version, repository, targetRepository);
+
+            //            ReportCompareRepositories report = new ReportCompareRepositories();
+            //            report.RepositoryName1 = repository.name;
+            //            report.RepositoryName2 = targetRepository.name;
+            //            report.FeatureUpdated = reportReleaseDistinctStores;
+
+            //            reportCompareRepositories.Add(report);
+            //        }
+            //    }
+
+            //    //foreach (Repository targetRepository in targetRepositories)
+            //    //{
+            //    //    if(!repository.name.Equals(version, StringComparison.OrdinalIgnoreCase))
+            //    //    {
+            //    //        ReleaseFile releaseFile2 = releaseLocalDataAccess.GetReleaseFileBeforeRelease(targetRepository.name);
+            //    //        List<ReportFeatureDistinctStore> reportReleaseDistinctStores = CompareReleaseFilesDistinctRepositories(
+            //    //            releaseFile1, releaseFile2, version, repository, targetRepository);
+
+            //    //        ReportCompareRepositories report = new ReportCompareRepositories();
+            //    //        report.RepositoryName1 = repository.name;
+            //    //        report.RepositoryName2 = targetRepository.name;
+            //    //        report.FeatureUpdated = reportReleaseDistinctStores;
+
+            //    //        reportCompareRepositories.Add(report);
+
+            //    //    }                    
+            //    //}
+            //}
 
             return reportCompareRepositories;
         }
@@ -61,6 +103,28 @@ namespace release_tracker.BusinessLogic
             string strJson = JsonSerializer.Serialize(reportCompareRepositories, opt);
 
             return strJson;
+        }
+
+        public List<ReleaseFile> DownloadReleaseFileToCompareBetweenAllRepositories()
+        {
+            List<ReleaseFile> result = new List<ReleaseFile>();
+
+            Repository[] repositories = configuration.GetSection("betweenRepositories").Get<Repository[]>();
+            foreach (Repository repository in repositories)
+            {
+                string url = repository.fileUrlRepository;
+                string token = repository.token;
+                DownloadReleaseFile downloader = new DownloadReleaseFile(new ReleaseRepository(url, token));
+                List<ReleaseFile> releaseFiles = downloader.getReleaseFile();
+                ReleaseFile releaseFile = releaseFiles.ElementAt(0); // There is an only file.
+
+                releaseFile = releaseLocalDataAccess.SaveReleaseFile(releaseFile, repository.pathLocalStore, repository.name);
+
+                result.Add(releaseFile);
+            }
+
+            return result;
+
         }
 
         public List<ReleaseFile> DownloadReleaseFileBeforeRelease()
@@ -82,7 +146,6 @@ namespace release_tracker.BusinessLogic
             }
 
             return result;
-
 
         }
 
