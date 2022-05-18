@@ -35,12 +35,28 @@ namespace release_tracker.Models
             foreach (JObject item in jsonFeatures)
             {
                 Feature feature = new Feature();
-                feature.Description = (string)item["@description"];
                 feature.Id = (string)item["@uid"];
-                feature.StrategyOffFor = GetStrategyOffFor((JObject)item["flipstrategy"]);
-                feature.StrategyOnFor = GetStrategyOnFor((JObject)item["flipstrategy"]);
-                feature.ReleaseVersion = (string)item["documentation"]["release"];
-                feature.Owner = (string)item["documentation"]["owner"];
+
+                if (item["@description"] != null)
+                {
+                    feature.Description = (string)item["@description"];
+                }
+
+                if (item["flipstrategy"] != null)
+                {
+                    feature.StrategyOffFor = GetStrategyOffFor((JObject)item["flipstrategy"]);
+                }
+
+                if (item["flipstrategy"] != null)
+                {
+                    feature.StrategyOnFor = GetStrategyOnFor((JObject)item["flipstrategy"]);
+                }
+
+                if (item["documentation"] != null)
+                {
+                    feature.ReleaseVersion = (string)item["documentation"]["release"];
+                    feature.Owner = (string)item["documentation"]["owner"];
+                }
 
                 this.features.Add(feature);
             }

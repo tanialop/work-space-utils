@@ -17,5 +17,25 @@ namespace release_tracker.Models
 
         [JsonPropertyName("featureUpdated")]
         public List<ReportFeatureDistinctStore> FeatureUpdated { get; set; }
+
+        public ReportFeatureDistinctStore GetByFeatureId(string featureId)
+        {
+            
+            if (FeatureUpdated == null)
+            {
+                return null;
+            }
+
+            ReportFeatureDistinctStore result = null;
+            foreach (var store in FeatureUpdated)
+            {
+                if(store.FeatureId.Equals(featureId))
+                {
+                    result = store;
+                    break;
+                }
+            }
+            return result;
+        }
     }
 }

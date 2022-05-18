@@ -14,6 +14,7 @@ namespace release_tracker.BusinessLogic
         private string senderPassword = "";
         private string htmlFileOutputSameRepository = "";
         private string htmlFileOutputAllRepositories = "";
+        private string htmlReportPathOutput = "";
         public Configuration(IConfiguration configuration)
         {
             senderEmail = configuration.GetSection("emails").GetSection("sender").GetValue<string>("username");
@@ -23,6 +24,8 @@ namespace release_tracker.BusinessLogic
                 configuration.GetValue<string>("htmlFileOutput"), "report.same.repository.html");
             htmlFileOutputAllRepositories = string.Format("{0}{1}",
                 configuration.GetValue<string>("htmlFileOutput"), "report.all.repositories.html");
+
+            htmlReportPathOutput = configuration.GetValue<string>("htmlFileOutput");
         }
 
         public string[] EmailDestination { get { return emailDestination; } }
@@ -33,5 +36,7 @@ namespace release_tracker.BusinessLogic
         public string HtmlReportFileSameRepository { get { return htmlFileOutputSameRepository; } }
 
         public string HtmlReportFileAllRepositories { get { return htmlFileOutputAllRepositories; } }
+
+        public string HtmlReportPathOutput { get { return htmlReportPathOutput; } }
     }
 }

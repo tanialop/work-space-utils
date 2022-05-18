@@ -21,5 +21,11 @@ namespace release_tracker.BusinessLogic
             var config = new Configuration(configuration);
             return new EmailFacade(config);
         }
+
+        public static HtmlReportAllRepositoryLast GetHtmlReportAllRepositoryLast(IConfiguration configuration)
+        {
+            var config = new Configuration(configuration);
+            return new HtmlReportAllRepositoryLast(config);
+        }
     }
 }

@@ -89,6 +89,11 @@ namespace release_tracker.LocalDataAccess
 
         public static string ReadFile(String location)
         {
+            if (location.Contains('?'))
+            {
+                location = location.Remove(location.IndexOf("?"));
+            }
+
             string data = "";
             FileStream fileStream = new FileStream(location, FileMode.Open, FileAccess.Read);
             using (StreamReader sr = new StreamReader(fileStream))
@@ -98,9 +103,14 @@ namespace release_tracker.LocalDataAccess
             return data;
         }
 
-        public static string WriteFile(string location, string content) {
+        public static string WriteFile(string location, string content)
+        {
+            if (location.Contains('?'))
+            {
+                location = location.Remove(location.IndexOf("?"));
+            }
 
-            FileStream fileStream = new FileStream(location, FileMode.Create, FileAccess.Write);            
+            FileStream fileStream = new FileStream(location, FileMode.Create, FileAccess.Write);
             using (StreamWriter sw = new StreamWriter(fileStream))
             {
                 sw.Write(content);

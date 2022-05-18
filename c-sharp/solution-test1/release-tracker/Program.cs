@@ -12,7 +12,7 @@ using System.Xml;
 IConfiguration configuration = GetConfig();
 
 
-ReleaseFileFacade releaseFileFacade = Factory.GetReleaseFileFacade(GetConfig());
+ReleaseFileFacade releaseFileFacade = Factory.GetReleaseFileFacade(configuration);
 releaseFileFacade.DownloadReleaseFileBeforeRelease();
 releaseFileFacade.DownloadReleaseFileAfterRelease();
 
@@ -27,7 +27,10 @@ HtmlReportAllRepository htmlReportAllRepository = new HtmlReportAllRepository(co
 htmlReportAllRepository.GenerateReportAllRepositories(reportCompareRepositories);
 //Console.WriteLine(releaseFileFacade.GetReportAsJson(reportCompareRepositories));
 
-EmailFacade emailFacade = Factory.GetEmailFacade(configuration);
+HtmlReportAllRepositoryLast htmlReportAllRepositoryLast = Factory.GetHtmlReportAllRepositoryLast(configuration);
+htmlReportAllRepositoryLast.GenerateReport(reportCompareRepositories);
+
+//EmailFacade emailFacade = Factory.GetEmailFacade(configuration);
 //emailFacade.SendHtmlReportSameRepositoryByEmail();  // It is throwing an Exception. 'The SMTP server requires a secure connection or the client was not authenticated. The server response was: 5.7.0 Authentication Required. Learn more a
 
 
